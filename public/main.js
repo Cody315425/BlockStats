@@ -15,20 +15,37 @@ async function getCollectionArray(collectionName){
     return dataArray;
 }
 
+async function getServData(ip){
+    let response = await fetch(`https://api.mcsrvstat.us/3/${ip}`);
+    let data = await response.json();
+    return data;
+}
+
+async function renderServerInfo(name, ip){
+    let data = await getServData(ip);
+    let result = document.querySelector(`#serverInfo`);
+    let html = ``;
+    html += `<img src="https://eu.mc-api.net/v3/server/favicon/${ip}">
+    <p>Server Name: ${name}</p>`;
+    if(data.online)
+        html += `<p>Status: Online</p>`;
+    else   
+        html += `<p>Status: Offline</p>`;
+    html+= `<p>Player Count: ${data.players.online}</p>`;
+
+    result.innerHTML = html;
+}
+
+window.renderServerInfo = renderServerInfo;
+
 function renderServers(servers){
     let result = document.querySelector(`#serverList`);
     let html = ``;
     for(let i of servers){
-        html += `<button class="serverBut">${i.serverName}</button>`
+        html += `<button class="serverBut" onclick="renderServerInfo('${i.serverName}', '${i.serverIP}')">${i.serverName}</button>`
     }
     result.innerHTML = html;
 }
 
 let servers = await getCollectionArray(`Servers`);
 renderServers(servers);
-
-function search(){
-    let searchKey = document.querySelector(`#nameIN`).value;
-    let result = getPlayerData(searchKey);
-    console.log(result);
-}
