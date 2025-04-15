@@ -19,7 +19,7 @@ function renderServers(servers){
     let result = document.querySelector(`#serverList`);
     let html = ``;
     for(let i of servers){
-        html += `<button class="serverBut">i.serverName</button>`
+        html += `<button class="serverBut">${i.serverName}</button>`
     }
     result.innerHTML = html;
 }
