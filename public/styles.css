@@ -13,16 +13,17 @@ body{
     display: flex;
     flex-direction: column;
     background-color: gainsboro;
+    gap: 1em;
 }
 nav{
     display: flex;
     flex-direction: row;
     flex-grow: 1;
     background-image: linear-gradient(black, white);
-    background-image: url("./Images/stone_texture_darker.png");
+    background-image: url("./Images/mossy_brick.jpeg");
     align-items: center;
     border: 2px, solid, black;
-    box-shadow: 0px 0px 10px black;    
+    box-shadow: 0px 4px 10px black;    
 }
 nav img{
     padding: 0;
@@ -40,69 +41,111 @@ h1{
 }
 main{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-grow: 15;
-}
-section{
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid rgb(0, 0, 0);
-}
-section h2{
-    width: 100%;
-    padding: 0;
-    margin: 0;
-    background-color: rgb(44, 43, 43);
-    color: white;
-    text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 2em;
-}
-div p{
-    padding-top: 0;
-    margin: 0;
-    font-family: monospace;
-    font-size: 1.5em;
-}
-#serverList{
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-}
-#master{
-    flex-grow: 2;
-}
-#detail{
-    flex-grow: 8;
     gap: 1em;
 }
-#playerName{
+#backVid{
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1; /* Places the video behind all other content */
+    object-fit: cover;
+}
+#navigate{
+    width: 70%;
+    height: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-image: url("./Images/clean_brick_smaller.jpg");
+    border: #000 solid 1px;
+    border-radius: 4px;
+    box-shadow: 0px 5px 10px black; 
+}
+#navigate button{
+    color: white;
+    height: 70%;
+    width: 3.5em;
+    background-color: rgb(26, 115, 23) ;
+    border-radius: 4px;
+    font-size: 1.5em;
+    font-family: fantasy;
+    text-align: center;
+    padding: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+#navigate input{
+    height: 80%;
+    width: 20em;
+    margin-right: 0.5em;
+    margin-top: auto;
+    margin-bottom: auto;
+    border-radius: 4px;
+    border: #000 solid 1px;
+    font-size: 1.25em;
+    font-family: fantasy;
+}
+#navigate button:hover{
+    background-color: rgb(2, 82, 2);
+    box-shadow: 0px 1px 3px black; 
+}
+#servers{   
+    display: flex;
+    flex-direction: row;
+    gap: 3em;
+    flex-wrap: wrap;
+}
+#servDisp{
+    padding: 0;
+    margin: 0;
+    width: 12em;
     display: flex;
     flex-direction: column;
     align-items: center;
+    border: #000 solid 1px;
+    border-radius: 4px;
+    box-shadow: 0px 5px 10px black;
+    background-image: url("./Images/clean_brick_smaller.jpg");
+    
 }
-#nameIN{
-    height: 2.5em;
-    width: 70%;
+#servDisp img{
+    width: 80%;
+    height: 100%;
+    margin-bottom: 0.2em;
+    margin-top: 0.2em;
+    border-radius: 4px; 
 }
-#master .serverBut{
-    font-size: 18px;
-    height: 2.5em;
-    width: 100%;
-}
-#master .serverBut:nth-child(odd){
+#servDisp p{
     color: white;
-    background-color: rgb(44, 43, 43);
+    font-size: 1.25em;
+    font-family: fantasy;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+#servDisp button{
+    height: 3em;
+    width: 100%;
+    background-color: rgb(30, 138, 26);
+    color: white;
+    font-size: 1em;
+    font-family: fantasy;
+}
+#servDisp button:hover{
+    background-color:rgb(2, 82, 2) ;
+    box-shadow: 0px 3px 5px black; 
 }
 .text_outline{
     text-shadow:
   -2px -2px 0 #000,
    2px -2px 0 #000,
-  -5px  5px 0 #000,
-   3px  5px 0 #000,
+  -2.5px  2px 0 #000,
+   2px  2px 0 #000,
   -1px -1px 0 #000,
    1px -1px 0 #000,
   -1px  1px 0 #000,

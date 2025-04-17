@@ -21,18 +21,27 @@ async function getServData(ip){
     return data;
 }
 
-async function renderServerInfo(name, ip){
-    let data = await getServData(ip);
-    let result = document.querySelector(`#serverInfo`);
+async function renderServerInfo(servers){
+    let result = document.querySelector(`#servers`);
     let html = ``;
-    html += `<img src="https://eu.mc-api.net/v3/server/favicon/${ip}">
-    <p>Server Name: ${name}</p>`;
-    if(data.online)
-        html += `<p>Status: Online</p>`;
-    else   
-        html += `<p>Status: Offline</p>`;
-    html+= `<p>Player Count: ${data.players.online}</p>`;
-
+    
+    for(let i of servers){
+        let serverData = await getServData(i.serverIP);
+        console.log(serverData);
+        html += `<div id="servDisp">
+        <p class="text_outline">${i.serverName}</p>
+      <img src="https://eu.mc-api.net/v3/server/favicon/${i.serverIP}">`;
+        if(serverData.online){
+            html += `<p class="text_outline">Online</p>
+            <p class="text_outline">Player Count: ${serverData.players.online}/${serverData.players.max}</p>`;
+        }   
+        else{
+            html += `<p class="text_outline">Offline</p>
+            <p class="text_outline">Player Count: N/A</p>`;
+        }
+        html += `<button class="text_outline hoverable">Reviews</button>
+        </div>`;
+    }
     result.innerHTML = html;
 }
 
@@ -48,4 +57,4 @@ function renderServers(servers){
 }
 
 let servers = await getCollectionArray(`Servers`);
-renderServers(servers);
+renderServerInfo(servers);

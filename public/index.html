@@ -7,23 +7,30 @@
   <title>BlockStats</title>
 </head>
 <body>
+  <video autoplay muted loop id="backVid">
+    <source src="./Images/end_back.mp4" type="video/mp4">
+  </video>
+  
   <nav>
     <img src="./Images/grass_block_outline.webp" alt="grass block here :D">
     <h1 class="text_outline">BlockStats</h1>
   </nav>
+ 
   <main>
    
-    <section id="master">
-      <h2>Servers</h2>
-      <div id="serverList"> 
-        
-      </div>
-      </section>
-    
-    <section id="detail">
-      <h2>Information</h2>
-      <div id="serverInfo">
-      </div>
+    <div id="navigate">
+      <input type="text" id="search" placeholder="Search for a server...">
+      <button id="searchBtn" class="text_outline" >Search</button>
+    </div>
+
+    <section id="servers">
+     <div id="servDisp">
+      <p class="text_outline">Hypixel Network</p>
+      <img src="./Images/test_img.svg">
+      <p class="text_outline">Online</p>
+      <p class="text_outline">Player Count: 10000</p>
+      <button class="text_outline">Reviews</button>
+     </div>
     </section>
 
   </main>
