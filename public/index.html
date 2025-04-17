@@ -20,18 +20,30 @@
    
     <div id="navigate">
       <input type="text" id="search" placeholder="Search for a server...">
-      <button id="searchBtn" class="text_outline" >Search</button>
+      <button id="searchBtn" class="text_outline" onclick="search()">Search</button>
+      <button id="searchBtn" class="text_outline" onclick="resetSearch()">Reset</button>
     </div>
 
     <section id="servers">
      <div id="servDisp">
-      <p class="text_outline">Hypixel Network</p>
+      <p class="text_outline">Hypixel</p>
       <img src="./Images/test_img.svg">
       <p class="text_outline">Online</p>
       <p class="text_outline">Player Count: 10000</p>
+      <p class="text_outline">IP: </p>
       <button class="text_outline">Reviews</button>
      </div>
     </section>
+    
+    <div id="sidePanel" class="side-panel">
+      <a onclick="closePanel()">X</a>
+      <h2 class="text_outline">Server Name</h2>
+      <textarea placeholder="Write your review here..."></textarea>
+      <button onclick="submitReview()">Submit</button>
+      <div id="reviews">
+
+      </div>
+    </div>
 
   </main>
   <script src="main.js" defer type="module"></script>

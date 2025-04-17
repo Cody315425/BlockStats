@@ -16,45 +16,89 @@ async function getCollectionArray(collectionName){
 }
 
 async function getServData(ip){
-    let response = await fetch(`https://api.mcsrvstat.us/3/${ip}`);
+    let response = await fetch(`https://eu.mc-api.net/v3/server/ping/${ip}`);
     let data = await response.json();
     return data;
 }
 
-async function renderServerInfo(servers){
+async function renderServerInfo(servers) {
     let result = document.querySelector(`#servers`);
     let html = ``;
-    
-    for(let i of servers){
-        let serverData = await getServData(i.serverIP);
-        console.log(serverData);
+
+    // Render the server elements without images first
+    for (let i of servers) {
         html += `<div id="servDisp">
         <p class="text_outline">${i.serverName}</p>
-      <img src="https://eu.mc-api.net/v3/server/favicon/${i.serverIP}">`;
-        if(serverData.online){
-            html += `<p class="text_outline">Online</p>
-            <p class="text_outline">Player Count: ${serverData.players.online}/${serverData.players.max}</p>`;
-        }   
-        else{
-            html += `<p class="text_outline">Offline</p>
-            <p class="text_outline">Player Count: N/A</p>`;
-        }
-        html += `<button class="text_outline hoverable">Reviews</button>
-        </div>`;
+        <img data-src="https://eu.mc-api.net/v3/server/favicon/${i.serverIP}" alt="${i.serverName}" class="lazy-image" style="opacity: 0;" onload="this.style.opacity=1;">
+        <p class="text_outline">Loading...</p>
+        <p class="text_outline">IP: ${i.serverIP}</p>
+        <button class="text_outline hoverable" onclick="handleReview('${i.serverName}')">Reviews</button>
+        </div>`; 
     }
     result.innerHTML = html;
-}
 
-window.renderServerInfo = renderServerInfo;
+    // Fetch server data and update the elements
+    for (let i of servers) {
+        let serverData = await getServData(i.serverIP);
+        let serverElement = document.querySelector(`#servers #servDisp:nth-child(${servers.indexOf(i) + 1})`);
+        let imgElement = serverElement.querySelector(`img`);
 
-function renderServers(servers){
-    let result = document.querySelector(`#serverList`);
-    let html = ``;
-    for(let i of servers){
-        html += `<button class="serverBut" onclick="renderServerInfo('${i.serverName}', '${i.serverIP}')">${i.serverName}</button>`
+        // Update the image source and make it visible
+        imgElement.src = imgElement.dataset.src;
+        imgElement.style.opacity = 1;
+
+        // Update the server status
+        let statusHtml = serverData.online
+            ? `<p class="text_outline">Online</p>
+               <p class="text_outline">Player Count: ${serverData.players.online}/${serverData.players.max}</p>`
+            : `<p class="text_outline">Offline</p>
+               <p class="text_outline">Player Count: N/A</p>`;
+        serverElement.querySelector(`p:nth-of-type(2)`).outerHTML = statusHtml;
     }
-    result.innerHTML = html;
 }
 
 let servers = await getCollectionArray(`Servers`);
 renderServerInfo(servers);
+
+function search(){
+    if(document.querySelector("#search").value === ""){
+        return;
+    }
+    let input = document.querySelector("#search").value.toLowerCase();
+    let results = [];
+    
+    for(let rec of servers){
+        let searchText = rec.serverName.toLowerCase();
+        if (searchText.search(input) !== -1 ){
+            results.push(rec);
+          }
+    }
+    renderServerInfo(results);
+}
+
+function resetSearch(){
+    document.querySelector("#search").value = ``;
+    renderServerInfo(servers);
+}
+
+
+function handleReview(name){
+    document.getElementById("sidePanel").classList.add("open");
+    document.querySelector("#sidePanel h2").innerText = name;
+    let result = document.querySelector("#reviews");
+}  
+
+function closePanel() {
+    document.getElementById("sidePanel").classList.remove("open");
+}
+
+
+function submitReview() {
+    const textarea = document.querySelector("#sidePanel textarea");
+    const reviewText = textarea.value;
+}
+
+window.closePanel = closePanel;
+window.search = search; 
+window.resetSearch = resetSearch;
+window.handleReview = handleReview;
