@@ -92,13 +92,9 @@ function closePanel() {
     document.getElementById("sidePanel").classList.remove("open");
 }
 
-
-function submitReview() {
-    const textarea = document.querySelector("#sidePanel textarea");
-    const reviewText = textarea.value;
-}
-
 window.closePanel = closePanel;
 window.search = search; 
 window.resetSearch = resetSearch;
 window.handleReview = handleReview;
+
+export {getCollectionArray};

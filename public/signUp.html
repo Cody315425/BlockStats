@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Account</title>
+    <style>
+
+        @font-face {
+            font-family: 'fantasy';
+            src: url('./fonts/Minecraftia-Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        body {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.933) 0%, rgba(0, 0, 0, 0.582) 50%, transparent 100%);
+            font-family: 'Minecraftia', 'fantasy';
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #backgroundVideo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            min-width: 100%;
+            min-height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        } 
+
+        .diagonal-fade {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(225deg, rgba(0, 0, 0, 0.952) 0%, rgba(0, 0, 0, 0.684) 100%);
+    z-index: -1;
+}
+
+.grass-link img {
+    position: absolute;
+    top: 20px;
+    left: 20px;    
+    width: 90px;
+    height: 90px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.grass-link img:hover {
+    transform: rotate(5deg) scale(1.05);
+}
+
+.form-section {
+    position: absolute;
+    top: 50%;
+    right: 25px;      
+    transform: translateY(-50%);
+    color: rgb(255, 251, 247);
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000;
+    text-align: right;
+    align-items: flex-end; 
+    padding-right: 38px;
+}
+
+        .form-section h2 {
+            margin: 0 0 20px;
+            font-size: 36px;
+            transform: scaleX(1.1);
+            font-family: fantasy;
+            padding-right: 30px;
+        }
+
+        .form-section p {
+            margin: 0 0 10px;
+            font-size: 20px;
+            transform: scaleX(1.05);
+        }
+
+        .form-section a {
+            color: #009dff;
+            text-decoration: none;
+            text-shadow: 2px 2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000;
+            font-family: 'fantasy';
+            font-size: 20px;
+            position: relative;
+            bottom: 0.72em;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"],input[type="Name"],input[type="Username"]  {
+            width: 60%;
+            padding: 14px;
+            margin: 12px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: rgb(255, 242, 224);
+            border: 2px solid rgb(66, 38, 14);
+            font-size: 18px;
+        }
+
+        button {
+    height: 3em;
+    width: 300px;
+    position: relative;
+    background-color: rgb(30, 138, 26);
+    color: white;
+    font-size: 1em;
+    font-family: fantasy;
+    margin-top: auto; 
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+button:hover {
+    background-color: rgb(2, 82, 2);
+    box-shadow: 0px 3px 5px black; 
+}
+
+        .change-method {
+            background: #3b3f54;
+        }
+
+        .switch a {
+            color: #389b22;  
+            text-shadow: 2px 2px 0 #000, 
+                         -2px 2px 0 #000, 
+                         2px -2px 0 #000, 
+                         -2px -2px 0 #000;
+            text-decoration: none;
+            font-family: 'Minecraftia', monospace;
+        }
+
+        .switch a:hover {
+            color: #1d4e1f;  
+        }
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: url('./Images/sign.jpg') no-repeat center center;
+            background-size: contain;
+            color: #3b2500;
+            padding: 40px 20px;
+            border: none;
+            border-radius: 0;
+            text-align: center;
+            display: none;
+            z-index: 10;
+        }
+
+        .popup h1 {
+            font-family: 'Minecraftia', monospace;
+            color: #3b2500;
+            font-size: clamp(12px, 2vw, 20px);
+            margin: 0;
+            padding: 10px 0;
+            word-wrap: break-word;
+            text-align: center;
+        }
+
+        #errorPopup {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: url('./Images/sign.jpg') no-repeat center center;
+    background-size: 100% 100%;  
+    width: 500px;  
+    max-width: 90%;  
+    color: #a30101;
+    font-size: 2vw;
+    padding: 20px;
+    border: none;
+    border-radius: 12px;
+    text-align: center;
+    display: none;
+    z-index: 10;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+}
+
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);  
+    z-index: 9;  
+    display: none;
+}
+
+    </style>
+</head>
+<body>
+    <video id="backgroundVideo" autoplay muted loop>
+        <source src="./Videos/Swamp.m4v" type="video/mp4">
+    </video>
+<div class="diagonal-fade"></div>
+
+<a href="index.html" class="grass-link">
+    <img src="./Images/Grass_Block_Outline.webp" alt="grass block here :D">
+</a>
+
+<div class="form-section">
+    <h2>  Welcome!</h2>
+    <p>Join the Blockstats Community</p>
+    <p class="switch">Already a Member? <a href="login.html">Log in</a></p>
+
+    <form id="signupForm">
+        <input type="Username" name="displayName" placeholder="Username" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <input type="password" name="confirmPassword" placeholder="Confirm Password" required> <br><br>
+        <button type="submit" name="action" class="primary-btn">Sign up</button>
+    </form>
+</div>
+
+<div id="overlay"></div>
+<div class="popup" id="successPopup">
+    <h1> ✅ Success!<br>You've joined<br>BlockStats!</h1>
+</div>
+
+<div class="popup" id="errorPopup">
+    <h1>Passwords<br>do not match!❌<br>Please try again!</h1>
+</div>
+
+<script type="module">
+import { signIn, logout, auth, setAuthListeners, createUser } from './auth.js';
+import { updateProfile } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+import {doc, setDoc, getFirestore} from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+import firebaseConfig from "./firebaseConfig.js";
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+//const form = document.getElementById('signupForm');
+const overlay = document.getElementById('overlay');
+const popup = document.getElementById('successPopup');
+const errorPopup = document.getElementById('errorPopup');
+
+async function signup(event) {
+    event.preventDefault();
+
+    const form = event.target;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
+
+    if (data.password !== data.confirmPassword) {
+        overlay.style.display = 'block';
+        errorPopup.style.display = 'block';
+        setTimeout(() => {
+            errorPopup.style.display = 'none';
+            overlay.style.display = 'none';
+        }, 2300);
+        return;
+    }
+
+    overlay.style.display = 'block';
+    popup.style.display = 'block';
+    setTimeout(() => {
+        popup.style.display = 'none';
+        overlay.style.display = 'none';
+        form.reset();
+    }, 2300);
+
+    try {
+        const userCredential = await createUser(data.email, data.password);
+        console.log("User signed up:", userCredential);
+        await updateProfile(auth.currentUser, {
+            displayName: data.displayName,
+            photoURL: ""
+        });
+        await setDoc(doc(db, "users", data.displayName), {
+            name: data.displayName,
+            email: data.email
+        });
+        console.log("User profile updated:", auth.currentUser);
+        window.location.href='index.html';
+        } 
+    catch (error) {
+            console.error("Signup error:", error.message);
+        }
+};
+
+document.querySelector('form').addEventListener('submit', signup);
+
+</script>
+
+</body>
+</html>

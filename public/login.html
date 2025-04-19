@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Account</title>
+    <style>
+
+        @font-face {
+            font-family: 'fantasy';
+            src: url('./fonts/Minecraftia-Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        body {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.933) 0%, rgba(0, 0, 0, 0.582) 50%, transparent 100%);
+            font-family: 'Minecraftia', 'fantasy';
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #backgroundVideo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            min-width: 100%;
+            min-height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        } 
+
+        .diagonal-fade {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(225deg, rgba(0, 0, 0, 0.952) 0%, rgba(0, 0, 0, 0.684) 100%);
+    z-index: -1;
+}
+
+.grass-link img {
+    position: absolute;
+    top: 20px;
+    left: 20px;    
+    width: 90px;
+    height: 90px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.grass-link img:hover {
+    transform: rotate(5deg) scale(1.05);
+}
+
+.form-section {
+    position: absolute;
+    top: 50%;
+    right: 25px;      
+    transform: translateY(-50%);
+    color: rgb(255, 251, 247);
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000;
+    text-align: right;
+    align-items: flex-end; 
+    padding-right: 38px;
+}
+
+        .form-section h2 {
+            margin: 0 0 20px;
+            font-size: 40px;
+            transform: scaleX(1.1);
+            font-family: fantasy;
+            padding-right: 30px;
+        }
+
+        .form-section p {
+            margin: 0 0 10px;
+            font-size: 20px;
+            transform: scaleX(1.05);
+        }
+
+        .form-section a {
+            color: #009dff;
+            text-decoration: none;
+            text-shadow: 2px 2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000;
+            font-family: 'fantasy';
+            font-size: 20px;
+            display: inline;
+}
+
+
+        input[type="text"], input[type="email"], input[type="password"],input[type="Username"]  {
+            width: 90%;
+            padding: 14px;
+            margin: 12px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: rgb(255, 242, 224);
+            border: 2px solid rgb(66, 38, 14);
+            font-size: 18px;
+        }
+
+        button {
+    height: 3em;
+    width: 300px;
+    position: relative;
+    background-color: rgb(30, 138, 26);
+    color: white;
+    font-size: 1em;
+    font-family: fantasy;
+    margin-top: auto; 
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+button:hover {
+    background-color: rgb(2, 82, 2);
+    box-shadow: 0px 3px 5px black; 
+}
+
+        .change-method {
+            background: #3b3f54;
+        }
+
+        .switch a {
+            color: #389b22;  
+            text-shadow: 2px 2px 0 #000, 
+                         -2px 2px 0 #000, 
+                         2px -2px 0 #000, 
+                         -2px -2px 0 #000;
+            text-decoration: none;
+            font-family: 'Minecraftia', monospace;
+            position: relative;
+            bottom: 0.72em;
+        }
+
+        .switch a:hover {
+            color: #1d4e1f;  
+        }
+
+        .horizontal-fade {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 30%, rgba(0, 0, 0, 0.9) 60%);
+    z-index: -1;                          
+}
+
+       
+    </style>
+</head>
+
+<body>
+    <video id="backgroundVideo" autoplay muted loop>
+        <source src="./Videos/formBG.mp4" type="video/mp4">
+    </video>
+    <div class="horizontal-fade"></div>
+
+    <a href="index.html" class="grass-link">
+        <img src="./Images/Grass_Block_Outline.webp" alt="grass block here :D">
+    </a>
+
+    <div class="form-section">
+        <h2>  Welcome Back!</h2>
+        <p class="switch">A New member? <a href="signUp.html">Sign up!</a></p>
+
+        <form id="loginForm">
+            <input type="username" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required> <br><br>
+            <button type="submit" name="action" class="primary-btn">Log in</button>
+        </form>
+    </div>
+
+    <script type="module">
+        import { login, logout, auth, setAuthListeners, createUser } from './auth.js';
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+        import { getFirestore, collection, getDocs} from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+        import firebaseConfig from "./firebaseConfig.js";
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function getCollectionArray(collectionName){
+            const collectionRef = collection(db, collectionName);
+            const snapshot = await getDocs(collectionRef);
+            const dataArray = [];
+            snapshot.forEach((doc) => {
+                dataArray.push(doc.data());
+            });
+            return dataArray;
+        }
+        
+        let users = await getCollectionArray('users');   
+        
+        async function loginHandle(event){
+            
+            event.preventDefault();
+
+            const form = event.target;
+            const formData = new FormData(form);//get form data
+            const data = Object.fromEntries(formData);
+            let found = false;
+            
+            console.log(data.username);
+            console.log(data.password);
+            
+            for(let u of users){
+                if(u.name == data.username){
+                    try{
+                        const userCredential = await login(u.email, data.password);
+                        console.log(auth.currentUser);
+                        found = true;
+                        break
+                    }catch(error){
+                        console.log('Error logging in:', error);
+                    }
+                }
+            }
+            if(found){
+                window.location.href = 'index.html';
+            }
+        } 
+
+        // Handle form submission
+        document.querySelector('form').addEventListener('submit', loginHandle);
+    </script>
+</body> 

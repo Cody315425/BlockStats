@@ -39,6 +39,32 @@ nav img{
     width: 7em;
     height: 6.5em;
 }
+nav button{
+    height: 50%;
+    width: 6em;
+    background-color: rgb(26, 115, 23) ;
+    border-radius: 4px;
+    text-align: center;
+    padding: 0;
+    margin-right: 0.5em;
+    margin-top: auto;
+    margin-bottom: auto;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: 3em;
+}
+nav button p{
+    color: white;
+    font-family: fantasy;
+    font-size: 1.8em;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+nav button:hover{
+    background-color:rgb(2, 82, 2) ;
+    box-shadow: 0px 3px 5px black; 
+}
 h1{
     padding:0;
     margin: 0;
@@ -53,6 +79,16 @@ main{
     flex-grow: 15;
     align-items: center;
     gap: 1em;
+}
+#user{
+    color: white;
+    position: relative;
+    top: 0.5em;
+    font-family: Minecraftia;
+    font-size: 2em;
+    padding: 0;
+    margin-left: 8em;
+
 }
 #backVid{
     position: fixed;
@@ -159,6 +195,42 @@ main{
     background-color:rgb(2, 82, 2) ;
     box-shadow: 0px 3px 5px black; 
 }
+.solid{
+    border-top: #908c8c solid 2px; 
+}
+#reviewSection{
+    margin-top: 0.6em;
+}
+#post{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border: #8B8B8B solid 5px;
+    background-color: #0a0a0a;
+    margin-top: 0.5em;
+}
+#reviewNoLog{
+    color: white;
+    width: 7em;
+    background-color: rgb(26, 115, 23) ;
+    border-radius: 4px;
+    font-size: 1.5em;
+    font-family: fantasy;
+    text-align: center;
+    padding: 0;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 0.2em;
+    cursor: default;
+}
+#review{
+    color: white;
+    font-family: Minecraftia;
+    font-size: 1.2em;
+    padding: 0;
+    margin: 0;
+}
 .text_outline{
     text-shadow:
   -2px -2px 0 #000,
@@ -206,6 +278,10 @@ main{
   -1px  1px 0 #000,
    1px  1px 0 #000;
 }
+.side-panel button:hover{
+    background-color:rgb(2, 82, 2) ;
+    box-shadow: 0px 2px 2px black; 
+}
 .side-panel h2{
     color: white;
     font-family: Minecraftia;
@@ -215,6 +291,20 @@ main{
 }  
 .side-panel.open {
     transform: translateX(0%);
+}
+.side-panel button{
+    color: white;
+    width: 7em;
+    background-color: rgb(26, 115, 23) ;
+    border-radius: 4px;
+    font-size: 1.5em;
+    font-family: fantasy;
+    text-align: center;
+    padding: 0;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 0.2em;
+    cursor: pointer;
 }
 .dot {
     position: relative;
@@ -228,6 +318,9 @@ main{
   }
   
 textarea {
+    background-color: #000000;
+    border: #8B8B8B solid 3px;
+    color: white;
     margin: 0;
     padding: 0;
     font-family: Minecraftia;

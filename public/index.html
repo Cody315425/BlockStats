@@ -14,6 +14,15 @@
   <nav>
     <img src="./Images/grass_block_outline.webp" alt="grass block here :D">
     <h1 class="text_outline">BlockStats</h1>
+    <h2 id="user" class="text_outline">Welcome!</h2>
+    
+    <button onclick="location.href='login.html'" id="loginBtn">
+      <p class="text_outline">Login</p>
+    </button>
+    <button onclick="logout()" id="logoutBtn" style="display: none;">
+      <p class="text_outline">Logout</p>
+    </button>
+
   </nav>
  
   <main>
@@ -39,13 +48,114 @@
       <a onclick="closePanel()">X</a>
       <h2 class="text_outline">Server Name</h2>
       <textarea placeholder="Write your review here..."></textarea>
-      <button onclick="submitReview()">Submit</button>
-      <div id="reviews">
+      <button id="reviewLog" onclick="createReview()", class="text_outline">Submit Review</button>
+      <p id="reviewNoLog" class="text_outline">Login to review!</p>
 
+      <hr class="solid">
+      <h2 id="reviewSection" class="text_outline">Reviews</h2>
+      <div id="reviews">
+        <div id="post">
+          <p id="username">Test Reviewer</p>
+          <p id="review">This is a test review.</p>
+        </div>
       </div>
     </div>
 
   </main>
-  <script src="main.js" defer type="module"></script>
+<script type="module">
+  import { signIn, logout, auth, setAuthListeners } from './auth.js';
+  import {getReviewByServerName} from './review.js';
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+  import { doc, getFirestore, collection, getDoc, setDoc, getDocs, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+  import firebaseConfig from "./firebaseConfig.js";
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+  let loginBtn = document.querySelector('#loginBtn');
+  let logoutBtn = document.querySelector('#logoutBtn');
+
+  function setLoggedInUI(){
+    document.querySelector('#user').innerHTML = `Welcome ${auth.currentUser.displayName}!`;
+    document.querySelector('#loginBtn').style.display = 'none';
+    document.querySelector('#logoutBtn').style.display = 'inline-block';
+    document.querySelector('#reviewNoLog').style.display = 'none';
+    document.querySelector('#reviewLog').style.display = 'inline-block';
+  }
+
+  function setLoggedOutUI(){
+    document.querySelector('#user').innerHTML = '';
+    document.querySelector('#loginBtn').style.display = 'inline-block';
+    document.querySelector('#logoutBtn').style.display = 'none';
+    document.querySelector('#reviewLog').style.display = 'none';
+    document.querySelector('#reviewNoLog').style.display = 'inline-block';
+  }
+
+  setAuthListeners(setLoggedInUI, setLoggedOutUI);
+
+    async function handleReview(serverName) {
+      const sidePanel = document.getElementById("sidePanel");
+      sidePanel.classList.add("open");
+
+      // Update the side panel title
+      document.querySelector("#sidePanel h2").innerText = serverName;
+      console.log('Review button clicked for server:', serverName);
+      const reviewData = await getReviewByServerName(serverName); // Fetch the document data
+
+      const reviewContainer = document.querySelector('#reviews');
+      reviewContainer.innerHTML = ''; // Clear previous reviews
+      let html = ``;
+
+      if (!reviewData || !reviewData.reviews) {
+        reviewContainer.innerHTML = `<div id="post">
+        <p id="review">There are no reviews. . .  yet!</p>
+        </div>`
+        return;
+      }
+      const reviews = reviewData.reviews;
+
+      for(let review of reviews){
+        html += `<div id="post">
+        <p id="review">${review.username} :  ${review.review}</p>
+        </div>`
+      }
+
+      reviewContainer.innerHTML = html;
+  }
+
+  window.handleReview = handleReview;
+
+  async function createReview(){
+    const serverName = document.querySelector("#sidePanel h2").innerText;
+    const data = {
+      username: auth.currentUser.displayName,
+      review: document.querySelector("#sidePanel textarea").value
+    };
+
+    const docRef = doc(db, 'Reviews', serverName); 
+    try{
+      const reviewDoc = await getDoc(docRef);
+      if (reviewDoc.exists()) {
+        await updateDoc(docRef, {
+          reviews: arrayUnion(data)
+        })
+      }
+      else{
+        await setDoc(docRef, {
+          reviews: [data]
+        });
+      }
+      document.querySelector("#sidePanel textarea").value = "";
+      handleReview(serverName);
+    }
+    catch(error){
+      console.error("Error adding review:", error);
+    }
+  } 
+
+  window.createReview = createReview;
+
+</script>
+<script src="main.js" defer type="module"></script>
 </body>
 </html>
