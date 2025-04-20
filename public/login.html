@@ -8,7 +8,7 @@
 
         @font-face {
             font-family: 'fantasy';
-            src: url('./fonts/Minecraftia-Regular.woff2') format('woff2');
+            src: url('/fonts/Minecraftia-Regular.woff2') format('woff2');
             font-weight: normal;
             font-style: normal;
             font-display: swap;
@@ -211,9 +211,6 @@ button:hover {
             const data = Object.fromEntries(formData);
             let found = false;
             
-            console.log(data.username);
-            console.log(data.password);
-            
             for(let u of users){
                 if(u.name == data.username){
                     try{
@@ -228,6 +225,10 @@ button:hover {
             }
             if(found){
                 window.location.href = 'index.html';
+            }
+            else{
+                alert('Invalid username or password!');
+                form.reset();
             }
         } 
 
