@@ -131,7 +131,10 @@ const db = getFirestore(app);
       username: auth.currentUser.displayName,
       review: document.querySelector("#sidePanel textarea").value
     };
-
+    if(!data.review){
+      alert("Review cannot be empty!");
+      return;
+    }
     const docRef = doc(db, 'Reviews', serverName); 
     try{
       const reviewDoc = await getDoc(docRef);
